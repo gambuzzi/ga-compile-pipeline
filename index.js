@@ -30,7 +30,24 @@ try {
   // Get the JSON webhook payload for the event that triggered the workflow
   // const payload = JSON.stringify(github.context.payload, undefined, 2)
   // console.log(`The event payload: ${payload}`);
-
+  [
+    `git config --global user.name '${payload.head_commit.author.name}'`,
+    `git config --global user.email '${payload.head_commit.author.email}'`,
+    'git add .github/workflows/pipeline.yaml && git commit -m "Automated pipeline build" && git push'
+  ].map((x) => {
+    exec(x, (error, stdout, stderr) => {
+      console.log(x);
+      if (error) {
+        console.log(`error: ${error.message}`);
+        return;
+      }
+      if (stderr) {
+        console.log(`stderr: ${stderr}`);
+        return;
+      }
+      console.log(`stdout: ${stdout}`);
+    });
+  });
 } catch (error) {
   core.setFailed(error.message);
 }
