@@ -33,7 +33,7 @@ try {
   [
     `git config --global user.name '${github.context.payload.head_commit.author.name}'`,
     `git config --global user.email '${github.context.payload.head_commit.author.email}'`,
-    'echo "#`date`" >> .github/workflows/pipeline.yaml',
+    'echo "# `date`" >> .github/workflows/pipeline.yaml',
     'git add -f .github/workflows/pipeline.yaml',
     'git commit -m "Automated pipeline build" ',
     'git push'
