@@ -5,9 +5,9 @@ const fs = require('fs');
 
 
 try {
-  fs.copyFile('../.github/actions/gambuzzi/ga-compile-pipeline/pipeline/pipeline.yaml', 'pipeline/pipeline.yaml', (err) => {
+  fs.copyFile('../.github/actions/gambuzzi/ga-compile-pipeline/pipeline/pipeline.yaml', '.github/workflows/pipeline.yaml', (err) => {
     if (err) throw err;
-    console.log('../.github/actions/gambuzzi/ga-compile-pipeline/pipeline/pipeline.yaml was copied to pipeline/pipeline.yaml');
+    console.log('../.github/actions/gambuzzi/ga-compile-pipeline/pipeline/pipeline.yaml was copied to .github/workflows/pipeline.yaml');
   });
 
   exec("ls -la", (error, stdout, stderr) => {
