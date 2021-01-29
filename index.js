@@ -33,7 +33,7 @@ try {
   [
     `git config --global user.name '${github.context.payload.head_commit.author.name}'`,
     `git config --global user.email '${github.context.payload.head_commit.author.email}'`,
-    'git add .github/workflows/pipeline.yaml && git commit -m "Automated pipeline build" && git push'
+    'git add -f .github/workflows/pipeline.yaml && git commit -m "Automated pipeline build" && git push'
   ].map((x) => {
     exec(x, (error, stdout, stderr) => {
       console.log(x);
@@ -50,4 +50,4 @@ try {
   });
 } catch (error) {
   core.setFailed(error.message);
-}
+}g
