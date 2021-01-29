@@ -18,49 +18,5 @@ inputs:
   publish:
     default: 'make publish'
 runs:
-  using: "composite"
-  steps: 
-    - name: Set up tools directory
-      shell: bash
-      working-directory: ${{ github.workspace }}
-      run: |
-        mkdir -p ${{ inputs.toolsdir }}
-        echo "${{ inputs.toolsdir }}" >> $GITHUB_PATH
-
-    - name: Install kustomize
-      shell: bash
-      working-directory: ${{ github.workspace }}
-      run: |
-        curl -L https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2F${{ inputs.kustomize_version }}/kustomize_${{ inputs.kustomize_version }}_linux_amd64.tar.gz -o kustomize.tar.gz
-        tar -xzf kustomize.tar.gz -C ${{ inputs.toolsdir }}
-
-    - name: Install kubectl
-      shell: bash
-      working-directory: ${{ github.workspace }}
-      run: |
-        curl -sL "https://storage.googleapis.com/kubernetes-release/release/${{ inputs.kubectl_version }}/bin/linux/amd64/kubectl" -o "${{ inputs.toolsdir }}/kubectl"
-        chmod +x "${{ inputs.toolsdir }}/kubectl"
-
-    - name: Build the pipeline yaml file
-      shell: bash
-      working-directory: ${{ github.workspace }}
-      env: 
-        BUILD: ${{ inputs.build }}
-        PUBLISH: ${{ inputs.publish }}
-      run: |
-        cd pipeline
-        # date +%s > lastrun.txt
-        # date >> lastrun.txt
-        make build
-
-    - name: Commit pipeline
-      shell: bash
-      working-directory: ${{ github.workspace }}
-      run: |
-        git config --global user.name 'Autobot'
-        git config --global user.email 'no-reply@users.noreply.github.com'
-        git add -f .github/workflows/pipeline.yaml
-        git add pipeline/lastrun.txt
-        git commit -m "Automated pipeline run"
-        git push   
-        
+  using: 'node12'
+  main: 'index.js'
