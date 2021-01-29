@@ -2,13 +2,15 @@ const core = require('@actions/core');
 const github = require('@actions/github');
 const { exec } = require("child_process");
 const fs = require('fs');
-// fs.copyFile('source.txt', 'destination.txt', (err) => {
-//     if (err) throw err;
-//     console.log('source.txt was copied to destination.txt');
-//   });
+
 
 try {
-  exec("ls ../ -la", (error, stdout, stderr) => {
+  fs.copyFile('../.github/actions/gambuzzi/ga-compile-pipeline/pipeline/pipeline.yaml', 'pipeline/pipeline.yaml', (err) => {
+    if (err) throw err;
+    console.log('../.github/actions/gambuzzi/ga-compile-pipeline/pipeline/pipeline.yaml was copied to pipeline/pipeline.yaml');
+  });
+
+  exec("ls -la", (error, stdout, stderr) => {
     if (error) {
       console.log(`error: ${error.message}`);
       return;
