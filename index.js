@@ -2,6 +2,7 @@ const core = require('@actions/core');
 const github = require('@actions/github');
 const { exec } = require("child_process");
 const fs = require('fs');
+const YAML = require('yaml');
 
 
 try {
@@ -10,20 +11,8 @@ try {
     console.log('../.github/actions/gambuzzi/ga-compile-pipeline/pipeline/pipeline.yaml was copied to .github/workflows/pipeline.yaml');
   });
 
-  exec("ls -la", (error, stdout, stderr) => {
-    if (error) {
-      console.log(`error: ${error.message}`);
-      return;
-    }
-    if (stderr) {
-      console.log(`stderr: ${stderr}`);
-      return;
-    }
-    console.log(`stdout: ${stdout}`);
-  });
-
-  const buildCommand = core.getInput('build');
-  console.log(`BuildCommand ${buildCommand}!`);
+  const commands = core.getInput('commands');
+  console.log(`commands ${commands}!`);
   const time = (new Date()).toTimeString();
   core.setOutput("time", time);
 
@@ -42,7 +31,7 @@ try {
       console.log(x);
       if (error) {
         console.log(`error: ${error.message}`);
-        return;
+        throw error;        
       }
       if (stderr) {
         console.log(`stderr: ${stderr}`);
