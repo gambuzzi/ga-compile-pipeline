@@ -34,7 +34,7 @@ jobs:
       -
         name: Build
         run: |
-          docker build --target=production -t ${IMG_NAME} .
+          docker build -t ${IMG_NAME} .
       - 
         name: Build
         env:
