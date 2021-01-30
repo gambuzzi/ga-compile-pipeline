@@ -21,8 +21,8 @@ jobs:
       - 
         name: Env Setup
         run: |
-          echo "COMMIT=$(shell git rev-parse HEAD)" >> $GITHUB_ENV
-          echo "PYMD5=$(shell find . \( -name '*.py' -o -name '*.sh' \) -exec cat {} + | md5)" >> $GITHUB_ENV
+          echo "COMMIT=$(git rev-parse HEAD)" >> $GITHUB_ENV
+          echo "PYMD5=$(find . \( -name '*.py' -o -name '*.sh' \) -exec cat {} + | md5sum)" >> $GITHUB_ENV
       - 
         name: Env Setup 2
         run: |
