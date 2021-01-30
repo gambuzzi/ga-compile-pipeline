@@ -22,7 +22,7 @@ jobs:
         name: Env Setup
         run: |
           echo "COMMIT=$(git rev-parse HEAD)" >> $GITHUB_ENV
-          echo "PYMD5=$(find . \( -name '*.py' -o -name '*.sh' \) -exec cat {} + | md5sum)" >> $GITHUB_ENV
+          echo "PYMD5=$(find . \( -name '*.py' -o -name '*.sh' \) -exec cat {} + | md5sum | awk '{print $1}')" >> $GITHUB_ENV
       - 
         name: Env Setup 2
         run: |
@@ -36,7 +36,7 @@ jobs:
         run: |
           docker build -t ${IMG_NAME} .
       - 
-        name: Build
+        name: Push
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
