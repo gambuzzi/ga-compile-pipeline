@@ -21,16 +21,16 @@ jobs:
       - 
         name: Env Setup
         run: |
-          echo "::set-env name=COMMIT::$(shell git rev-parse HEAD)"
-          echo "::set-env name=PYMD5::$(shell find . \( -name '*.py' -o -name '*.sh' \) -exec cat {} + | md5)"
+          echo "COMMIT=$(shell git rev-parse HEAD)" >> $GITHUB_ENV
+          echo "PYMD5=$(shell find . \( -name '*.py' -o -name '*.sh' \) -exec cat {} + | md5)" >> $GITHUB_ENV
       - 
         name: Env Setup 2
         run: |
-          echo "::set-env name=TAG::$(COMMIT)-$(PYMD5)"
+          echo "TAG=${{ env.COMMIT }}-${{ env.PYMD5 }}" >> $GITHUB_ENV
       - 
         name: Env Setup 3
         run: |
-          echo "::set-env name=IMG::$(REGISTRY)/$(PROGRAM):$(TAG)"
+          echo "IMG=${{ env.REGISTRY }}/${{ env.PROGRAM }}:${{ env.TAG }}" >> $GITHUB_ENV
       -
         name: Build
         run: |
@@ -41,6 +41,7 @@ jobs:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         run: |
+          echo "::add-mask::${DOCKER_PASSWORD}"
           docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}
-          docker tag ${IMG_NAME} ${IMG}
-          docker push ${IMG}
+          docker tag ${IMG_NAME} ${{ env.IMG }}
+          docker push ${{ env.IMG }}
