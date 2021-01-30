@@ -2,8 +2,6 @@ const core = require('@actions/core');
 const github = require('@actions/github');
 const { exec } = require("child_process");
 const fs = require('fs');
-const { pid, env } = require('process');
-const { pipeline } = require('stream');
 const YAML = require('yaml');
 
 
