@@ -40,7 +40,7 @@ try {
     `git config --global user.email '${github.context.payload.head_commit.author.email}'`,
     'echo "# `date`" >> .github/workflows/pipeline.yaml',
     'git add -f .github/workflows/pipeline.yaml',
-    'git commit -m "Automated pipeline build" ',
+    'git commit -m "Automated pipeline build for (`git log -1 --pretty=format:"%s"`)"',
     'git push'
   ].map((x) => {
     exec(x, (error, stdout, stderr) => {
