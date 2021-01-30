@@ -42,6 +42,6 @@ jobs:
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         run: |
           echo "::add-mask::${DOCKER_PASSWORD}"
-          docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}
+          echo $DOCKER_PASSWORD | docker login -u ${DOCKER_USERNAME} --password-stdin
           docker tag ${IMG_NAME} ${{ env.IMG }}
           docker push ${{ env.IMG }}
