@@ -1,22 +1,17 @@
 name: 'Compile yaml pipeline'
 description: 'Compile yaml pipeline'
 inputs:
-  toolsdir: 
-    description: 'Where to install the tools'
+  program:
     required: true
-    default: ${{ github.workspace }}/bin
-  kustomize_version: 
-    description: 'kustomize version'
+  registry:
     required: true
-    default: 'v3.8.4'
-  kubectl_version:
-    description: 'kubectl version'
+  img_name:
     required: true
-    default: 'v1.19.0'
-  commands:
+  maintainer:
     required: true
-  publish:
-    default: 'make publish'
+  owner:
+    required: true
+
 runs:
   using: 'node12'
   main: 'index.js'
